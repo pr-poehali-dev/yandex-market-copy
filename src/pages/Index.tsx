@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import AuthModal from '@/components/AuthModal';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -82,6 +83,24 @@ const products = [
 
 export default function Index() {
   const [activeTab, setActiveTab] = useState('catalog');
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const authStatus = params.get('auth');
+    const userData = params.get('user');
+
+    if (authStatus === 'success' && userData) {
+      try {
+        const parsedUser = JSON.parse(decodeURIComponent(userData));
+        setUser(parsedUser);
+        window.history.replaceState({}, '', '/');
+      } catch (e) {
+        console.error('Failed to parse user data');
+      }
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -111,8 +130,20 @@ export default function Index() {
               <Button variant="ghost" size="icon">
                 <Icon name="ShoppingCart" size={20} />
               </Button>
-              <Button variant="ghost" size="icon">
-                <Icon name="User" size={20} />
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={() => user ? null : setAuthModalOpen(true)}
+              >
+                {user ? (
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span className="text-sm font-semibold">
+                      {user.name?.[0] || user.email?.[0] || 'U'}
+                    </span>
+                  </div>
+                ) : (
+                  <Icon name="User" size={20} />
+                )}
               </Button>
             </div>
           </div>
@@ -363,6 +394,8 @@ export default function Index() {
           </TabsContent>
         </Tabs>
       </main>
+
+      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
     </div>
   );
 }

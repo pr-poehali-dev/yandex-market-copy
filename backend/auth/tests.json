@@ -1,0 +1,28 @@
+{
+  "tests": [
+    {
+      "name": "Test Google OAuth redirect",
+      "method": "GET",
+      "path": "/?provider=google",
+      "expectedStatus": 302,
+      "expectedHeaders": {
+        "Location": "string"
+      }
+    },
+    {
+      "name": "Test Yandex OAuth redirect",
+      "method": "GET",
+      "path": "/?provider=yandex",
+      "expectedStatus": 302,
+      "expectedHeaders": {
+        "Location": "string"
+      }
+    },
+    {
+      "name": "Test OPTIONS request",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}
