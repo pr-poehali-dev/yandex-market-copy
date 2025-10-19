@@ -46,6 +46,7 @@ const products = [
     sales: 342,
     stock: 87,
     rating: 4.8,
+    image: 'https://cdn.poehali.dev/projects/3b9c8aba-f919-4454-b9da-486f7f8bcff4/files/b46b1418-eb38-483c-9542-308907f0e9ee.jpg',
   },
   {
     id: 2,
@@ -55,6 +56,7 @@ const products = [
     sales: 256,
     stock: 43,
     rating: 4.9,
+    image: 'https://cdn.poehali.dev/projects/3b9c8aba-f919-4454-b9da-486f7f8bcff4/files/76277a5f-da9d-4c9b-a5ff-1050f37405e9.jpg',
   },
   {
     id: 3,
@@ -64,6 +66,7 @@ const products = [
     sales: 189,
     stock: 62,
     rating: 4.7,
+    image: 'https://cdn.poehali.dev/projects/3b9c8aba-f919-4454-b9da-486f7f8bcff4/files/63a1e0ac-8416-4d50-a577-eba70fdd3fba.jpg',
   },
   {
     id: 4,
@@ -73,6 +76,7 @@ const products = [
     sales: 421,
     stock: 128,
     rating: 4.6,
+    image: 'https://cdn.poehali.dev/projects/3b9c8aba-f919-4454-b9da-486f7f8bcff4/files/c6203e04-8718-4cbb-986e-1fb3ee566c5c.jpg',
   },
 ];
 
@@ -149,9 +153,11 @@ export default function Index() {
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 relative overflow-hidden">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Icon name="Package" size={64} className="text-slate-300 group-hover:scale-110 transition-transform" />
-                      </div>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                       <Badge className="absolute top-3 right-3 bg-white/90 text-foreground">
                         <Icon name="Star" size={12} className="mr-1" />
                         {product.rating}
@@ -323,8 +329,12 @@ export default function Index() {
                         className="flex items-center justify-between p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
                       >
                         <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center">
-                            <Icon name="Package" size={20} className="text-slate-400" />
+                          <div className="w-12 h-12 rounded-lg bg-white overflow-hidden">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                            />
                           </div>
                           <div>
                             <p className="font-semibold text-sm">{product.name}</p>
